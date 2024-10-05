@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from elasticsearch import Elasticsearch, helpers
 import pandas as pd
 import os
@@ -16,6 +17,14 @@ class Config:
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 es = Elasticsearch(
     hosts=[Config.ES_HOST],
     http_auth=(Config.ES_USERNAME, Config.ES_PASSWORD),
