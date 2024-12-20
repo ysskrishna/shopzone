@@ -19,7 +19,7 @@ export function SearchBar() {
     }
   
     return (
-      <form onSubmit={handleSubmit} className="w-full bg-blue-700">
+      <form onSubmit={handleSubmit} className="w-full relative">
         <Input
           type="text"
           value={query}
