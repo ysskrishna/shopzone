@@ -1,61 +1,34 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import ProductList from '@/widgets/ProductList'
-import Filters from '@/widgets/Filters'
-import { SearchResponse } from '../types'
+import Link from "next/link"
+import { SearchBar } from "@/widgets/SearchBar"
 
-export default function SearchPage() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [searchResults, setSearchResults] = useState<SearchResponse | null>(null)
-  const [filters, setFilters] = useState({
-    mainCategory: '',
-    subCategory: '',
-    priceRange: [0, 100000],
-    ratingRange: [0, 5]
-  })
 
-  useEffect(() => {
-    // In a real application, this would be an API call to your Elasticsearch backend
-    const fetchSearchResults = async () => {
-      // Simulating API call with the provided data
-      const body = {
-        "name": "lloyd"
-      };
-      const response = await fetch('http://localhost:8005/search', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      })
-      const data = await response.json()
-      setSearchResults(data)
-    }
-
-    fetchSearchResults()
-  }, [searchTerm, filters])
-
+export default function Home() {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Product Search</h1>
-      <div className="flex mb-4">
-        <Input
-          type="text"
-          placeholder="Search for products..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="mr-2"
-        />
-        <Button onClick={() => {}}>Search</Button>
-      </div>
-      <div className="flex">
-        <Filters
-          aggregations={searchResults?.aggregations}
-          filters={filters}
-          setFilters={setFilters}
-        />
-        <ProductList results={searchResults?.results || []} />
+    <div className="flex min-h-screen flex-col items-center justify-center p-4 bg-gradient-to-b from-white to-gray-100">
+      <div className="w-full max-w-5xl text-center space-y-8">
+        <h1 className="text-6xl font-bold text-gray-900">
+          Welcome to ShopZone
+        </h1>
+        <p className="text-xl text-gray-600">
+          Discover millions of products at the best prices
+        </p>
+        <div className="w-full max-w-2xl mx-auto">
+          <SearchBar />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-12">
+          {["Electronics", "Fashion", "Home", "Beauty"].map((category) => (
+            <Link
+              key={category}
+              href={`/search?q=${category.toLowerCase()}`}
+              className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            >
+              <h2 className="text-lg font-semibold">{category}</h2>
+              <p className="text-sm text-gray-500">Shop Now →</p>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   )
