@@ -11,41 +11,17 @@ export interface Product {
   asin: string;
 }
 
-export interface SearchResult {
-  _index: string;
-  _type: string;
-  _id: string;
-  _score: number;
-  _source: Product;
-}
-
 export interface Aggregations {
-  main_categories: Array<{ key: string; doc_count: number }>;
-  sub_categories: Array<{ key: string; doc_count: number }>;
-  price_stats: {
-    count: number;
-    min: number;
-    max: number;
-    avg: number;
-    sum: number;
-  };
-  rating_stats: {
-    count: number;
-    min: number;
-    max: number;
-    avg: number;
-    sum: number;
-  };
-  rating_ranges: Array<{
-    key: string;
-    from?: number;
-    to?: number;
-    doc_count: number;
-  }>;
+  categories: Array<{ key: string; doc_count: number }>;
+  subcategories: Array<{ key: string; doc_count: number }>;
+  price_stats: { min: number; max: number; avg: number };
+  rating_stats: { min: number; max: number; avg: number };
 }
 
 export interface SearchResponse {
-  results: SearchResult[];
+  results: Product[];
   total: number;
+  page: number;
+  total_pages: number;
   aggregations: Aggregations;
 }
