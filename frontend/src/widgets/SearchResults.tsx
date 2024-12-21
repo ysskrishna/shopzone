@@ -53,10 +53,9 @@ export function SearchResults({ results, loading }: SearchResultsProps) {
     search.updateSearch({ sort: value });
   };
 
-  const renderPaginationItems = () => {
+  const renderPaginationItems = (maxVisiblePages: number=5) => {
     const items = [];
     const totalPages = results.total_pages;
-    const maxVisiblePages = 5;
     const currentPage = results.page;
 
     if (totalPages <= maxVisiblePages) {
@@ -200,7 +199,12 @@ export function SearchResults({ results, loading }: SearchResultsProps) {
                 disabled={results.page === 1}
               />
             </PaginationItem>
-            {renderPaginationItems()}
+            <span className='flex sm:hidden'>
+              {renderPaginationItems(2)}
+            </span>
+            <span className='hidden sm:flex'>
+              {renderPaginationItems(5)}
+            </span>
             <PaginationItem>
               <PaginationNext
                 onClick={() => handlePageChange(results.page + 1)}
