@@ -126,7 +126,7 @@ export function SearchResults({ results, loading }: SearchResultsProps) {
         </h2>
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
           <Select 
-            value={search.sort || "relevance"} 
+            value={search.sort || "rating_desc"} 
             onValueChange={handleSortChange}
           >
             <SelectTrigger className="w-full md:w-[180px]">
