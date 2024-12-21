@@ -217,6 +217,10 @@ async def search_items(
                 sort_options.append({"discount_price": "desc"})
             elif sort == "rating_desc":
                 sort_options.append({"ratings": "desc"})
+            elif sort == "relevance":
+                sort_options.append("_score")  # Sort by relevance score
+        else:
+            sort_options.append("_score")  # Default to relevance sorting
 
         # Construct the query
         query = {

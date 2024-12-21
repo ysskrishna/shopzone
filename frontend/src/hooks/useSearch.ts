@@ -43,7 +43,7 @@ export function useSearch() {
     maxPrice: searchParams.get('max_price'),
     minRating: searchParams.get('min_rating'),
     maxRating: searchParams.get('max_rating'),
-    sort: searchParams.get('sort') || 'rating_desc',
+    sort: searchParams.get('sort') || 'relevance',
     updateSearch,
     clearFilters: () => {
       const params = new URLSearchParams();

@@ -126,13 +126,14 @@ export function SearchResults({ results, loading }: SearchResultsProps) {
         </h2>
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
           <Select 
-            value={search.sort || "rating_desc"} 
+            value={search.sort || "relevance"} 
             onValueChange={handleSortChange}
           >
             <SelectTrigger className="w-full md:w-[180px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="relevance">Relevance</SelectItem>
               <SelectItem value="price_asc">Price: Low to High</SelectItem>
               <SelectItem value="price_desc">Price: High to Low</SelectItem>
               <SelectItem value="rating_desc">Highest Rated</SelectItem>
