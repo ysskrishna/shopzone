@@ -177,7 +177,7 @@ async def search_items(
             
         # Handle multiple categories only if the list is not empty
         if category:
-            must_conditions.append({
+            filter_conditions.append({
                 "terms": {
                     "main_category": category
                 }
@@ -185,7 +185,7 @@ async def search_items(
             
         # Handle multiple subcategories only if the list is not empty
         if subcategory:
-            must_conditions.append({
+            filter_conditions.append({
                 "terms": {
                     "sub_category": subcategory
                 }
@@ -247,24 +247,47 @@ async def search_items(
 
         print(f"query: {query}")
         
-        # Perform the search query
-        response = es.search(index=INDEX_NAME, body=query)
+        # Create a separate query for aggregations using only must_conditions
+        aggs_query = {
+            "query": {
+                "bool": {
+                    "must": must_conditions if must_conditions else [{"match_all": {}}]
+                }
+            },
+            "size": 0,  # We don't need hits for aggregations
+            "aggs": {
+                "main_categories": {
+                    "terms": {"field": "main_category", "size": 50}
+                },
+                "sub_categories": {
+                    "terms": {"field": "sub_category", "size": 50}
+                },
+                "price_stats": {
+                    "stats": {"field": "discount_price"}
+                },
+                "rating_stats": {
+                    "stats": {"field": "ratings"}
+                }
+            }
+        }
 
-        print(f"response: {response}")
+        # Perform both queries
+        search_response = es.search(index=INDEX_NAME, body=query)
+        aggs_response = es.search(index=INDEX_NAME, body=aggs_query)
         
-        # Return both search results and aggregations
-        results = [{**hit['_source'], 'id': hit['_id']} for hit in response['hits']['hits']]
+        # Return both search results and unfiltered aggregations
+        results = [{**hit['_source'], 'id': hit['_id']} for hit in search_response['hits']['hits']]
         return {
             "results": results,
-            "total": response['hits']['total']['value'],
+            "total": search_response['hits']['total']['value'],
             "page": page,
             "limit": limit,
-            "total_pages": ceil(response['hits']['total']['value'] / limit),
+            "total_pages": ceil(search_response['hits']['total']['value'] / limit),
             "aggregations": {
-                "categories": response['aggregations']['main_categories']['buckets'],
-                "subcategories": response['aggregations']['sub_categories']['buckets'],
-                "price_stats": response['aggregations']['price_stats'],
-                "rating_stats": response['aggregations']['rating_stats']
+                "categories": aggs_response['aggregations']['main_categories']['buckets'],
+                "subcategories": aggs_response['aggregations']['sub_categories']['buckets'],
+                "price_stats": aggs_response['aggregations']['price_stats'],
+                "rating_stats": aggs_response['aggregations']['rating_stats']
             }
         }
     except Exception as e:
