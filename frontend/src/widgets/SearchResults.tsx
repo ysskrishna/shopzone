@@ -160,13 +160,13 @@ export function SearchResults({ results, loading }: SearchResultsProps) {
         {results.results.map((product) => (
           <Card key={product.id}>
             <CardContent className="p-4">
-              <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 mb-4">
+              <div className="relative w-full h-[320px] overflow-hidden rounded-lg mb-4">
                 <Image
                   src={product.image}
                   alt={product.name}
                   width={320}
                   height={320}
-                  className="object-cover"
+                  className="object-contain absolute inset-0 w-full h-full"
                 />
               </div>
               <h3 className="text-sm font-medium text-gray-900 truncate mb-2">
