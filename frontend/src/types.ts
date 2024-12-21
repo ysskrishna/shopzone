@@ -1,4 +1,5 @@
 export interface Product {
+  id: string;
   name: string;
   main_category: string;
   sub_category: string;
@@ -22,6 +23,7 @@ export interface SearchResponse {
   results: Product[];
   total: number;
   page: number;
+  limit: number;
   total_pages: number;
   aggregations: Aggregations;
 }
