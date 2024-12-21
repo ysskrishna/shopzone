@@ -119,31 +119,17 @@ export function SearchResults({ results, loading }: SearchResultsProps) {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 space-y-4 md:space-y-0">
         <h2 className="text-lg font-semibold">
           Showing {((results.page - 1) * results.limit) + 1} - {Math.min(results.page * results.limit, results.total)} of {results.total} results
           {search.query && ` for "${search.query}"`}
         </h2>
-        <div className="flex items-center space-x-4">
-          <Select 
-            value={results.limit.toString()} 
-            onValueChange={handleItemsPerPageChange}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Items per page" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="10">10 per page</SelectItem>
-              <SelectItem value="20">20 per page</SelectItem>
-              <SelectItem value="50">50 per page</SelectItem>
-            </SelectContent>
-          </Select>
-          
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
           <Select 
             value={search.sort || "relevance"} 
             onValueChange={handleSortChange}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full md:w-[180px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -190,7 +176,21 @@ export function SearchResults({ results, loading }: SearchResultsProps) {
         ))}
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
+        <Select 
+          value={results.limit.toString()} 
+          onValueChange={handleItemsPerPageChange}
+        >
+          <SelectTrigger className="w-full sm:w-[180px]">
+            <SelectValue placeholder="Items per page" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="10">10 per page</SelectItem>
+            <SelectItem value="20">20 per page</SelectItem>
+            <SelectItem value="50">50 per page</SelectItem>
+          </SelectContent>
+        </Select>
+
         <Pagination>
           <PaginationContent>
             <PaginationItem>
