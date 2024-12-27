@@ -33,6 +33,20 @@ export function useSearch() {
   const subcategory = searchParams.getAll('subcategory');
   const limit = searchParams.get('limit') || '10';
 
+  const getFilters = () => {
+    return {
+      category: category,
+      subcategory: subcategory,
+      priceRange: {
+        min: searchParams.get('min_price'),
+        max: searchParams.get('max_price')
+      },
+      ratingsRange: {
+        min: searchParams.get('min_rating'),
+        max: searchParams.get('max_rating')
+      }
+    };
+  };
   return {
     query: searchParams.get('q') || '',
     page: parseInt(searchParams.get('page') || '1'),
@@ -45,6 +59,7 @@ export function useSearch() {
     maxRating: searchParams.get('max_rating'),
     sort: searchParams.get('sort') || 'relevance',
     updateSearch,
+    getFilters,
     clearFilters: () => {
       const params = new URLSearchParams();
       params.set('q', searchParams.get('q') || '');
@@ -53,4 +68,4 @@ export function useSearch() {
       router.push(`/search?${params.toString()}`);
     }
   };
-} 
+}
