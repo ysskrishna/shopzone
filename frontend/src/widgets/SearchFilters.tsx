@@ -52,7 +52,7 @@ export function SearchFilters({ results }: SearchFiltersProps) {
     })
   }, [search])
 
-  const formatPrice = (value: number) => `₹${value.toLocaleString('en-IN')}`
+  const formatPrice = (value: number) => `₹${value}`
   const formatRating = (value: number) => `${value.toFixed(1)}★`
 
   if (!results?.aggregations) {
@@ -108,18 +108,22 @@ export function SearchFilters({ results }: SearchFiltersProps) {
         <div className="mb-6">
           <h4 className="font-medium mb-2">Price Range</h4>
           <MultiRangeSlider
-            min={results.aggregations.price_stats.min}
-            max={results.aggregations.price_stats.max}
+            min={Math.floor(results?.aggregations?.price_stats?.min / 100) * 100}
+            max={Math.ceil(results?.aggregations?.price_stats?.max / 100) * 100}
+            step={100}
             onChange={() => console.log("Price changed")}
+            formatValue={formatPrice}
           />
         </div>
 
         <div className="mb-6">
           <h4 className="font-medium mb-2">Rating</h4>
           <MultiRangeSlider
-            min={results.aggregations.rating_stats.min}
-            max={results.aggregations.rating_stats.max}
+            min={results?.aggregations?.rating_stats?.min}
+            max={results?.aggregations?.rating_stats?.max}
+            step={1}
             onChange={() => console.log("Rating changed")}
+            formatValue={formatRating}
           />
         </div>
       </div>

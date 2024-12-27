@@ -5,9 +5,10 @@ interface MultiRangeSliderProps {
   min: number;
   max: number;
   onChange: Function;
+  step?: number;
+  formatValue?: Function;
 }
-
-const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange }) => {
+const MultiRangeSlider: FC<MultiRangeSliderProps & { step?: number }> = ({ min, max, onChange, step = 1, formatValue = (value: number) => value.toString() }) => {
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
     const minValRef = useRef<HTMLInputElement>(null);
@@ -24,7 +25,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange }) => 
     useEffect(() => {
       if (maxValRef.current) {
         const minPercent = getPercent(minVal);
-        const maxPercent = getPercent(+maxValRef.current.value); // Precede with '+' to convert the value from type string to type number
+        const maxPercent = getPercent(+maxValRef.current.value);
   
         if (range.current) {
           range.current.style.left = `${minPercent}%`;
@@ -56,10 +57,11 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange }) => 
         type="range"
         min={min}
         max={max}
+        step={step}
         value={minVal}
         ref={minValRef}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          const value = Math.min(+event.target.value, maxVal - 1);
+          const value = Math.min(+event.target.value, maxVal - step);
           setMinVal(value);
           event.target.value = value.toString();
         }}
@@ -75,10 +77,11 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange }) => 
         type="range"
         min={min}
         max={max}
+        step={step}
         value={maxVal}
         ref={maxValRef}
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
-          const value = Math.max(+event.target.value, minVal + 1);
+          const value = Math.max(+event.target.value, minVal + step);
           setMaxVal(value);
           event.target.value = value.toString();
         }}
@@ -87,9 +90,9 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange }) => 
 
       <div className="relative w-full h-8">
         <div className="absolute rounded-[3px] h-[5px] bg-gray-300 w-full z-[1]"></div>
-        <div ref={range} className="absolute rounded-[3px] h-[5px] bg-[#9fe5e1] z-[2]"></div>
-        <div className="absolute text-gray-300 text-xs mt-5 left-0">{minVal}</div>
-        <div className="absolute text-gray-300 text-xs mt-5 right-0">{maxVal}</div>
+        <div ref={range} className="absolute rounded-[3px] h-[5px] bg-primary z-[2]"></div>
+        <div className="absolute text-xs mt-5 left-0">{formatValue(minVal)}</div>
+        <div className="absolute text-xs mt-5 right-0">{formatValue(maxVal)}</div>
       </div>
     </div>
   );
