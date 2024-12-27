@@ -4,7 +4,6 @@ import { useSearch } from '@/hooks/useSearch'
 import { SearchResponse } from '@/types'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
-import { useCallback } from 'react'
 import MultiRangeSlider from './MultiRangeSlider'
 
 interface SearchFiltersProps {
@@ -36,21 +35,23 @@ export function SearchFilters({ results }: SearchFiltersProps) {
     })
   }
 
-  const handlePriceChange = useCallback((range: { min: number; max: number }) => {
+  const handlePriceChange = (range: { min: number; max: number }) => {
+    console.log("Price changed", range)
     search.updateSearch({
       min_price: range.min.toString(),
       max_price: range.max.toString(),
       page: '1'
-    })
-  }, [search])
+    });
+  }
 
-  const handleRatingChange = useCallback((range: { min: number; max: number }) => {
+  const handleRatingChange = (range: { min: number; max: number }) => {
+    console.log("Rating changed", range);
     search.updateSearch({
       min_rating: range.min.toString(),
       max_rating: range.max.toString(),
       page: '1'
-    })
-  }, [search])
+    });
+  }
 
   const formatPrice = (value: number) => `₹${value}`
   const formatRating = (value: number) => `${value.toFixed(1)}★`
@@ -111,7 +112,7 @@ export function SearchFilters({ results }: SearchFiltersProps) {
             min={Math.floor(results?.aggregations?.price_stats?.min / 100) * 100}
             max={Math.ceil(results?.aggregations?.price_stats?.max / 100) * 100}
             step={100}
-            onChange={() => console.log("Price changed")}
+            onSubmit={handlePriceChange}
             formatValue={formatPrice}
           />
         </div>
@@ -122,7 +123,7 @@ export function SearchFilters({ results }: SearchFiltersProps) {
             min={results?.aggregations?.rating_stats?.min}
             max={results?.aggregations?.rating_stats?.max}
             step={1}
-            onChange={() => console.log("Rating changed")}
+            onSubmit={handleRatingChange}
             formatValue={formatRating}
           />
         </div>

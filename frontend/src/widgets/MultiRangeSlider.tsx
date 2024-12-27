@@ -4,11 +4,13 @@ import classnames from "classnames";
 interface MultiRangeSliderProps {
   min: number;
   max: number;
-  onChange: Function;
+  onSubmit: Function;
+  onChange?: Function;
   step?: number;
   formatValue?: Function;
 }
-const MultiRangeSlider: FC<MultiRangeSliderProps & { step?: number }> = ({ min, max, onChange, step = 1, formatValue = (value: number) => value.toString() }) => {
+
+const MultiRangeSlider: FC<MultiRangeSliderProps & { step?: number }> = ({ min, max, onSubmit, onChange=null, step = 1, formatValue = (value: number) => value.toString() }) => {
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
     const minValRef = useRef<HTMLInputElement>(null);
@@ -46,13 +48,9 @@ const MultiRangeSlider: FC<MultiRangeSliderProps & { step?: number }> = ({ min, 
       }
     }, [maxVal, getPercent]);
   
-    // Get min and max values when their state changes
-    useEffect(() => {
-      onChange({ min: minVal, max: maxVal });
-    }, [minVal, maxVal, onChange]);
-
   return (
-    <div className="w-full my-2 relative">
+    <div className="flex flex-row gap-2 ">
+      <div className="w-full pt-3 relative">
       <input
         type="range"
         min={min}
@@ -95,6 +93,14 @@ const MultiRangeSlider: FC<MultiRangeSliderProps & { step?: number }> = ({ min, 
         <div className="absolute text-xs mt-5 right-0">{formatValue(maxVal)}</div>
       </div>
     </div>
+    <button 
+      onClick={() => onSubmit({ min: minVal, max: maxVal })}
+      className="h-min py-1.5 px-4 bg-white border border-gray-300 rounded-md text-sm text-black hover:bg-gray-50 transition-colors"
+    >
+      Go
+    </button>
+    </div>
   );
 };
+
 export default MultiRangeSlider;
