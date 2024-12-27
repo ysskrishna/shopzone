@@ -51,7 +51,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange }) => 
     }, [minVal, maxVal, onChange]);
 
   return (
-    <div className="w-full my-2">
+    <div className="w-full my-2 relative">
       <input
         type="range"
         min={min}
@@ -64,7 +64,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange }) => 
           event.target.value = value.toString();
         }}
         className={classnames(
-          "pointer-events-none absolute h-0 w-[200px] outline-none appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-gray-50 [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-[0_0_1px_1px_#ced4da] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:h-[18px] [&::-webkit-slider-thumb]:w-[18px] [&::-webkit-slider-thumb]:mt-1 [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:bg-gray-50 [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:shadow-[0_0_1px_1px_#ced4da] [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:h-[18px] [&::-moz-range-thumb]:w-[18px] [&::-moz-range-thumb]:mt-1 [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:relative",
+          "pointer-events-none absolute h-0 w-full outline-none appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-gray-50 [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-[0_0_1px_1px_#ced4da] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:h-[18px] [&::-webkit-slider-thumb]:w-[18px] [&::-webkit-slider-thumb]:mt-1 [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:bg-gray-50 [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:shadow-[0_0_1px_1px_#ced4da] [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:h-[18px] [&::-moz-range-thumb]:w-[18px] [&::-moz-range-thumb]:mt-1 [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:relative",
           {
             "z-[5]": minVal > max - 100,
             "z-[3]": minVal <= max - 100
@@ -82,17 +82,16 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max, onChange }) => 
           setMaxVal(value);
           event.target.value = value.toString();
         }}
-        className="pointer-events-none absolute h-0 w-[200px] outline-none z-[4] appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-gray-50 [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-[0_0_1px_1px_#ced4da] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:h-[18px] [&::-webkit-slider-thumb]:w-[18px] [&::-webkit-slider-thumb]:mt-1 [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:bg-gray-50 [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:shadow-[0_0_1px_1px_#ced4da] [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:h-[18px] [&::-moz-range-thumb]:w-[18px] [&::-moz-range-thumb]:mt-1 [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:relative"
+        className="pointer-events-none absolute h-0 w-full outline-none z-[4] appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-gray-50 [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-[0_0_1px_1px_#ced4da] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:h-[18px] [&::-webkit-slider-thumb]:w-[18px] [&::-webkit-slider-thumb]:mt-1 [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:bg-gray-50 [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:shadow-[0_0_1px_1px_#ced4da] [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:h-[18px] [&::-moz-range-thumb]:w-[18px] [&::-moz-range-thumb]:mt-1 [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:relative"
       />
 
-      <div className="relative w-[200px]">
+      <div className="relative w-full h-8">
         <div className="absolute rounded-[3px] h-[5px] bg-gray-300 w-full z-[1]"></div>
         <div ref={range} className="absolute rounded-[3px] h-[5px] bg-[#9fe5e1] z-[2]"></div>
-        <div className="absolute text-gray-300 text-xs mt-5 left-[6px]">{minVal}</div>
-        <div className="absolute text-gray-300 text-xs mt-5 right-[-4px]">{maxVal}</div>
+        <div className="absolute text-gray-300 text-xs mt-5 left-0">{minVal}</div>
+        <div className="absolute text-gray-300 text-xs mt-5 right-0">{maxVal}</div>
       </div>
     </div>
   );
 };
-
 export default MultiRangeSlider;
