@@ -4,8 +4,8 @@ import { useSearch } from '@/hooks/useSearch'
 import { SearchResponse } from '@/types'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
-import { MultiRangeSlider } from '@/components/ui/multi-range-slider'
 import { useCallback } from 'react'
+import MultiRangeSlider from './MultiRangeSlider'
 
 interface SearchFiltersProps {
   results: SearchResponse | null
@@ -105,30 +105,21 @@ export function SearchFilters({ results }: SearchFiltersProps) {
             ))}
           </div>
         </div>
-
-        {/* Price Range */}
         <div className="mb-6">
           <h4 className="font-medium mb-2">Price Range</h4>
           <MultiRangeSlider
             min={results.aggregations.price_stats.min}
             max={results.aggregations.price_stats.max}
-            // onChange={handlePriceChange}
             onChange={() => console.log("Price changed")}
-            step={100}
-            formatValue={formatPrice}
           />
         </div>
 
-        {/* Rating Range */}
         <div className="mb-6">
           <h4 className="font-medium mb-2">Rating</h4>
           <MultiRangeSlider
             min={results.aggregations.rating_stats.min}
             max={results.aggregations.rating_stats.max}
-            // onChange={handleRatingChange}
             onChange={() => console.log("Rating changed")}
-            step={0.5}
-            formatValue={formatRating}
           />
         </div>
       </div>
