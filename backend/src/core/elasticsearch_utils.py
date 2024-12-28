@@ -1,18 +1,17 @@
 from src.core.config import Config
 from elasticsearch import Elasticsearch, helpers
 
+es_client = Elasticsearch(
+    hosts=[Config.ES_HOST],
+    http_auth=(Config.ES_USERNAME, Config.ES_PASSWORD),
+    timeout=600
+)
+
 
 class ElasticSearchHelper:
-    def __init__(self):
-        self.es = Elasticsearch(
-            hosts=[Config.ES_HOST],
-            http_auth=(Config.ES_USERNAME, Config.ES_PASSWORD),
-            timeout=600
-        )
-        self.products_index = Config.ES_PRODUCTS_INDEX
-
-    def get_es_client(self):
-        return self.es
+    def __init__(self, es = es_client, products_index = Config.ES_PRODUCTS_INDEX):
+        self.es = es
+        self.products_index = products_index
 
     def reset_products_index(self):
         if self.es.indices.exists(index=self.products_index):
@@ -46,6 +45,8 @@ class ElasticSearchHelper:
         )
         print(f"Products Index {self.products_index} created successfully.")
     
+    def get_products_count(self):
+        return self.es.count(index=self.products_index)['count']
 
     def add_products_bulk(self, data):
         batch_size = 10000  # Process 1000 documents at a time
