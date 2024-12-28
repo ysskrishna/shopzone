@@ -14,7 +14,7 @@ class Config:
     ES_USERNAME = os.getenv("ES_USERNAME")
     ES_PASSWORD = os.getenv("ES_PASSWORD")
     ES_HOST = os.getenv("ES_HOST")
-    ES_INDEX = os.getenv("ES_INDEX")
+    ES_PRODUCTS_INDEX = os.getenv("ES_PRODUCTS_INDEX")
 
 
 app = FastAPI()
@@ -33,7 +33,7 @@ es = Elasticsearch(
 )
 
 
-INDEX_NAME = Config.ES_INDEX
+INDEX_NAME = Config.ES_PRODUCTS_INDEX
 CSV_FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "dataset", "output.csv")
 
 
