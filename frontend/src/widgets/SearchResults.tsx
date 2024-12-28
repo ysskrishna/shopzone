@@ -21,6 +21,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
+import { ActiveFilters } from '@/widgets/ActiveFilters';
 
 interface SearchResultsProps {
   results: SearchResponse | null;
@@ -119,6 +120,9 @@ export function SearchResults({ results, loading }: SearchResultsProps) {
 
   return (
     <div>
+      <div className="mb-4">
+        <ActiveFilters />
+      </div>
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 space-y-4 md:space-y-0">
         <h2 className="text-lg font-semibold">
           Showing {((results.page - 1) * results.limit) + 1} - {Math.min(results.page * results.limit, results.total)} of {results.total} results

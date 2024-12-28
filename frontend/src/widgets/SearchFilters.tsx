@@ -5,6 +5,7 @@ import { SearchResponse } from '@/types'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import MultiRangeSlider from './MultiRangeSlider'
+import { Tag, Layers, DollarSign, Star } from 'lucide-react'
 
 interface SearchFiltersProps {
   results: SearchResponse | null
@@ -67,7 +68,10 @@ export function SearchFilters({ results }: SearchFiltersProps) {
         
         {/* Categories */}
         <div className="mb-6">
-          <h4 className="font-medium mb-2">Categories</h4>
+          <h4 className="font-medium mb-2 flex items-center gap-2">
+            <Tag className="h-4 w-4" />
+            Categories
+          </h4>
           <div className="space-y-2">
             {results.aggregations.categories.map((category: any) => (
               <div key={category.key} className="flex items-center space-x-2">
@@ -88,7 +92,10 @@ export function SearchFilters({ results }: SearchFiltersProps) {
 
         {/* Subcategories */}
         <div className="mb-6">
-          <h4 className="font-medium mb-2">Subcategories</h4>
+          <h4 className="font-medium mb-2 flex items-center gap-2">
+            <Layers className="h-4 w-4" />
+            Subcategories
+          </h4>
           <div className="space-y-2 max-h-48 overflow-y-auto">
             {results.aggregations.subcategories.map((subcategory: any) => (
               <div key={subcategory.key} className="flex items-center space-x-2">
@@ -107,7 +114,10 @@ export function SearchFilters({ results }: SearchFiltersProps) {
           </div>
         </div>
         <div className="mb-6">
-          <h4 className="font-medium mb-2">Price Range</h4>
+          <h4 className="font-medium mb-2 flex items-center gap-2">
+            <DollarSign className="h-4 w-4" />
+            Price
+          </h4>
           <MultiRangeSlider
             min={Math.floor(results?.aggregations?.price_stats?.min / 100) * 100}
             max={Math.ceil(results?.aggregations?.price_stats?.max / 100) * 100}
@@ -118,7 +128,10 @@ export function SearchFilters({ results }: SearchFiltersProps) {
         </div>
 
         <div className="mb-6">
-          <h4 className="font-medium mb-2">Rating</h4>
+          <h4 className="font-medium mb-2 flex items-center gap-2">
+            <Star className="h-4 w-4" />
+            Deals & Discounts
+          </h4>
           <MultiRangeSlider
             min={results?.aggregations?.rating_stats?.min}
             max={results?.aggregations?.rating_stats?.max}

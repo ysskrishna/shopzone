@@ -37,14 +37,10 @@ export function useSearch() {
     return {
       category: category,
       subcategory: subcategory,
-      priceRange: {
-        min: searchParams.get('min_price'),
-        max: searchParams.get('max_price')
-      },
-      ratingsRange: {
-        min: searchParams.get('min_rating'),
-        max: searchParams.get('max_rating')
-      }
+      minPrice: searchParams.get('min_price'),
+      maxPrice: searchParams.get('max_price'),
+      minRating: searchParams.get('min_rating'),
+      maxRating: searchParams.get('max_rating')
     };
   };
   return {
