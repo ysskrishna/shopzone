@@ -2,9 +2,34 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "description": "Frontend for ShopZone - An e-commerce product search application",
+  "author": {
+    "name": "ysskrishna",
+    "url": "https://github.com/ysskrishna"
+  },
+  "keywords": [
+    "nextjs",
+    "typescript",
+    "react",
+    "react-hooks",
+    "radix-ui",
+    "tailwindcss",
+    "e-commerce",
+    "product-search",
+    "shopzone",
+    "ysskrishna",
+    "online shopping",
+    "enterprise-search",
+    "elasticsearch"
+  ],
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ysskrishna/shopzone"
+  },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build", 
     "start": "next start",
     "lint": "next lint",
     "check-format": "prettier --check .",
