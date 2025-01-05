@@ -24,20 +24,11 @@ import {
 import { ActiveFilters } from '@/widgets/ActiveFilters';
 
 interface SearchResultsProps {
-  results: SearchResponse | null;
-  loading: boolean;
+  results: SearchResponse;
 }
 
-export function SearchResults({ results, loading }: SearchResultsProps) {
+export function SearchResults({ results }: SearchResultsProps) {
   const search = useSearch();
-
-  if (loading) {
-    return <div className="flex items-center justify-center h-96">Loading...</div>;
-  }
-
-  if (!results) {
-    return null;
-  }
 
   const handlePageChange = (newPage: number) => {
     search.updateSearch({ page: newPage.toString() });
@@ -201,7 +192,7 @@ export function SearchResults({ results, loading }: SearchResultsProps) {
             <PaginationItem>
               <PaginationPrevious
                 onClick={() => handlePageChange(results.page - 1)}
-                disabled={results.page === 1}
+                isActive={results.page > 1}
               />
             </PaginationItem>
             <span className='flex sm:hidden'>
@@ -213,7 +204,7 @@ export function SearchResults({ results, loading }: SearchResultsProps) {
             <PaginationItem>
               <PaginationNext
                 onClick={() => handlePageChange(results.page + 1)}
-                disabled={results.page === results.total_pages}
+                isActive={results.page < results.total_pages}
               />
             </PaginationItem>
           </PaginationContent>

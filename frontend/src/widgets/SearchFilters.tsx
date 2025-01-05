@@ -6,9 +6,10 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import MultiRangeSlider from './MultiRangeSlider'
 import { Tag, Layers, DollarSign, Star } from 'lucide-react'
+import { BucketAggregation } from '@/types'
 
 interface SearchFiltersProps {
-  results: SearchResponse | null
+  results: SearchResponse
 }
 
 export function SearchFilters({ results }: SearchFiltersProps) {
@@ -37,7 +38,6 @@ export function SearchFilters({ results }: SearchFiltersProps) {
   }
 
   const handlePriceChange = (range: { min: number; max: number }) => {
-    console.log("Price changed", range)
     search.updateSearch({
       min_price: range.min.toString(),
       max_price: range.max.toString(),
@@ -46,7 +46,6 @@ export function SearchFilters({ results }: SearchFiltersProps) {
   }
 
   const handleRatingChange = (range: { min: number; max: number }) => {
-    console.log("Rating changed", range);
     search.updateSearch({
       min_rating: range.min.toString(),
       max_rating: range.max.toString(),
@@ -56,10 +55,6 @@ export function SearchFilters({ results }: SearchFiltersProps) {
 
   const formatPrice = (value: number) => `₹${value}`
   const formatRating = (value: number) => `${value.toFixed(1)}★`
-
-  if (!results?.aggregations) {
-    return <div>Loading filters...</div>
-  }
 
   return (
     <div className="space-y-6">
@@ -73,7 +68,7 @@ export function SearchFilters({ results }: SearchFiltersProps) {
             Categories
           </h4>
           <div className="space-y-2">
-            {results.aggregations.categories.map((category: any) => (
+            {results.aggregations.categories.map((category: BucketAggregation) => (
               <div key={category.key} className="flex items-center space-x-2">
                 <Checkbox 
                   id={`category-${category.key}`}
@@ -97,7 +92,7 @@ export function SearchFilters({ results }: SearchFiltersProps) {
             Subcategories
           </h4>
           <div className="space-y-2 max-h-48 overflow-y-auto">
-            {results.aggregations.subcategories.map((subcategory: any) => (
+            {results.aggregations.subcategories.map((subcategory: BucketAggregation) => (
               <div key={subcategory.key} className="flex items-center space-x-2">
                 <Checkbox 
                   id={`subcategory-${subcategory.key}`}
@@ -119,8 +114,8 @@ export function SearchFilters({ results }: SearchFiltersProps) {
             Price
           </h4>
           <MultiRangeSlider
-            min={Math.floor(results?.aggregations?.price_stats?.min / 100) * 100}
-            max={Math.ceil(results?.aggregations?.price_stats?.max / 100) * 100}
+            min={Math.floor(results.aggregations.price_stats.min / 100) * 100}
+            max={Math.ceil(results.aggregations.price_stats.max / 100) * 100}
             step={100}
             onSubmit={handlePriceChange}
             formatValue={formatPrice}
@@ -133,8 +128,8 @@ export function SearchFilters({ results }: SearchFiltersProps) {
             Deals & Discounts
           </h4>
           <MultiRangeSlider
-            min={results?.aggregations?.rating_stats?.min}
-            max={results?.aggregations?.rating_stats?.max}
+            min={results.aggregations.rating_stats.min}
+            max={results.aggregations.rating_stats.max}
             step={1}
             onSubmit={handleRatingChange}
             formatValue={formatRating}
@@ -144,4 +139,3 @@ export function SearchFilters({ results }: SearchFiltersProps) {
     </div>
   )
 }
-

@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { SearchResponse } from '@/types';
 import { SearchResults } from "@/widgets/SearchResults";
 import { SearchFilters } from "@/widgets/SearchFilters";
+import Loading from '@/components/common/Loading';
+import UnhandledError from '@/components/common/UnhandledError';
 
 export default function SearchPage() {
   const [results, setResults] = useState<SearchResponse | null>(null);
@@ -50,21 +52,36 @@ export default function SearchPage() {
       fetchResults();
     }
   }, [searchParams]);
+  
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1">
-            <SearchFilters results={results} />
-          </div>
-          <div className="md:col-span-3">
-            <SearchResults results={results} loading={loading} />
-          </div>
+  const renderData = () => {
+    if (loading) {
+      return <Loading />;
+    }
+
+    if (!results) {
+      return <UnhandledError />
+    }
+
+    return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="md:col-span-1">
+          <SearchFilters results={results} />
+        </div>
+        <div className="md:col-span-3">
+          <SearchResults results={results} />
         </div>
       </div>
+    </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header />
+
+      {renderData()}
     </div>
   );
 }

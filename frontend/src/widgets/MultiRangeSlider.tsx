@@ -4,13 +4,12 @@ import classnames from "classnames";
 interface MultiRangeSliderProps {
   min: number;
   max: number;
-  onSubmit: Function;
-  onChange?: Function;
+  onSubmit: (values: { min: number; max: number }) => void;
   step?: number;
-  formatValue?: Function;
+  formatValue?: (value: number) => string;
 }
 
-const MultiRangeSlider: FC<MultiRangeSliderProps & { step?: number }> = ({ min, max, onSubmit, onChange=null, step = 1, formatValue = (value: number) => value.toString() }) => {
+const MultiRangeSlider: FC<MultiRangeSliderProps & { step?: number }> = ({ min, max, onSubmit, step = 1, formatValue = (value: number) => value.toString() }) => {
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
     const minValRef = useRef<HTMLInputElement>(null);

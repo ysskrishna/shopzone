@@ -12,11 +12,22 @@ export interface Product {
   asin: string;
 }
 
+export interface BucketAggregation {
+  key: string;
+  doc_count: number;
+}
+
+export interface StatsAggregation {
+  min: number;
+  max: number;
+  avg: number;
+}
+
 export interface Aggregations {
-  categories: Array<{ key: string; doc_count: number }>;
-  subcategories: Array<{ key: string; doc_count: number }>;
-  price_stats: { min: number; max: number; avg: number };
-  rating_stats: { min: number; max: number; avg: number };
+  categories: Array<BucketAggregation>;
+  subcategories: Array<BucketAggregation>;
+  price_stats: StatsAggregation;
+  rating_stats: StatsAggregation;
 }
 
 export interface SearchResponse {
