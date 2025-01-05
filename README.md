@@ -37,6 +37,27 @@ A full stack e-commerce application built with Next.js, FastAPI and Elasticsearc
 9. Elasticsearch will be available at `http://localhost:9200/`
 
 
+## Media
+
+### Landing Page
+<img src="./media/landing_page.png" alt="Landing Page"/>
+
+### Search Page
+<img src="./media/search_page1.png" alt="Search Page 1"/>
+
+### Search Page Pagination
+<img src="./media/search_page2.png" alt="Search Page Pagination"/>
+
+### Search Page With Filters
+<img src="./media/search_with_filters.png" alt="Search Page With Filters"/>
+
+### Elasticsearch server
+<img src="./media/elastic_search_server.png" alt="Elasticsearch Server"/>
+
+### Kibana server
+<img src="./media/kibana_server.png" alt="Kibana Server"/>
+
+
 
 ## License
 Copyright (c) 2024 Y. Siva Sai Krishna
