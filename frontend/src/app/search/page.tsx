@@ -9,6 +9,7 @@ import { SearchResults } from "@/widgets/SearchResults";
 import { SearchFilters } from "@/widgets/SearchFilters";
 import Loading from '@/components/common/Loading';
 import UnhandledError from '@/components/common/UnhandledError';
+import config from '@/common/config';
 
 export default function SearchPage() {
   const [results, setResults] = useState<SearchResponse | null>(null);
@@ -37,7 +38,7 @@ export default function SearchPage() {
         if (search.sort) params.set('sort', search.sort);
         if (search.limit) params.set('limit', search.limit.toString());
 
-        const response = await fetch(`http://localhost:8005/search?${params.toString()}`);
+        const response = await fetch(`${config?.baseUrl}/search?${params.toString()}`);
         const data = await response.json();
         setResults(data);
       } catch (error) {
