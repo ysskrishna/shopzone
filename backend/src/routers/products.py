@@ -167,3 +167,83 @@ async def search_items(
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error searching items: {str(e)}")
+
+@router.get("/product/{product_id}")
+async def get_product(product_id: str):
+    """
+    Get a product by its Elasticsearch ID
+    """
+    try:
+        response = es_client.get(
+            index=Config.ES_PRODUCTS_INDEX,
+            id=product_id
+        )
+        
+        if response['found']:
+            return {**response['_source'], 'id': response['_id']}
+        else:
+            raise HTTPException(status_code=404, detail="Product not found")
+            
+    except Exception as e:
+        if "404" in str(e):
+            raise HTTPException(status_code=404, detail="Product not found")
+        raise HTTPException(status_code=500, detail=f"Error fetching product: {str(e)}")
+
+@router.get("/product/{product_id}/recommendations")
+async def get_product_recommendations(
+    product_id: str,
+    limit: int = 10
+):
+    """
+    Get similar product recommendations based on a product ID
+    """
+    try:
+        # First, get the source product
+        source_product = es_client.get(
+            index=Config.ES_PRODUCTS_INDEX,
+            id=product_id
+        )
+        
+        if not source_product['found']:
+            raise HTTPException(status_code=404, detail="Product not found")
+            
+        # Construct more_like_this query
+        query = {
+            "query": {
+                "more_like_this": {
+                    "fields": ["name", "description", "main_category", "sub_category"],
+                    "like": [
+                        {
+                            "_index": Config.ES_PRODUCTS_INDEX,
+                            "_id": product_id
+                        }
+                    ],
+                    "min_term_freq": 1,
+                    "max_query_terms": 25,
+                    "min_doc_freq": 1
+                }
+            },
+            "size": limit,
+            "_source": True
+        }
+        
+        # Execute the search
+        response = es_client.search(
+            index=Config.ES_PRODUCTS_INDEX,
+            body=query
+        )
+        
+        # Transform and return the results
+        recommendations = [{**hit['_source'], 'id': hit['_id']} 
+                         for hit in response['hits']['hits']
+                         if hit['_id'] != product_id]  # Exclude the source product
+        
+        return {
+            "results": recommendations,
+            "total": len(recommendations)
+        }
+            
+    except Exception as e:
+        if "404" in str(e):
+            raise HTTPException(status_code=404, detail="Product not found")
+        raise HTTPException(status_code=500, detail=f"Error fetching recommendations: {str(e)}")

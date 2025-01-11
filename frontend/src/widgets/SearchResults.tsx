@@ -2,9 +2,7 @@
 
 import { useSearch } from '@/hooks/useSearch';
 import { SearchResponse } from '@/types';
-import Image from 'next/image';
-import { Star } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+
 import {
   Select,
   SelectContent,
@@ -22,6 +20,7 @@ import {
   PaginationEllipsis,
 } from "@/components/ui/pagination";
 import { ActiveFilters } from '@/widgets/ActiveFilters';
+import { ProductCard } from './ProductCard';
 
 interface SearchResultsProps {
   results: SearchResponse;
@@ -139,36 +138,7 @@ export function SearchResults({ results }: SearchResultsProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {results.results.map((product) => (
-          <Card key={product.id}>
-            <CardContent className="p-4">
-              <div className="relative w-full h-[320px] overflow-hidden rounded-lg mb-4">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  width={320}
-                  height={320}
-                  className="object-contain absolute inset-0 w-full h-full"
-                />
-              </div>
-              <h3 className="text-sm font-medium text-gray-900 truncate mb-2">
-                {product.name}
-              </h3>
-              <div className="flex items-center mb-2">
-                <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                <span className="ml-1 text-sm text-gray-600">
-                  {product.ratings.toFixed(1)} ({product.no_of_ratings})
-                </span>
-              </div>
-              <div>
-                <span className="text-lg font-bold">₹{product.discount_price.toFixed(2)}</span>
-                {product.actual_price > product.discount_price && (
-                  <span className="ml-2 text-sm text-gray-500 line-through">
-                    ₹{product.actual_price.toFixed(2)}
-                  </span>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
 
