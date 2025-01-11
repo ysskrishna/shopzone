@@ -51,6 +51,12 @@ A full stack e-commerce application built with Next.js, FastAPI and Elasticsearc
 ### Search Page With Filters
 <img src="./media/search_with_filters.png" alt="Search Page With Filters"/>
 
+### Product Details Page
+<img src="./media/product_details.png" alt="Product Details Page"/>
+
+### Product Recommendations
+<img src="./media/product_recommendations.png" alt="Product Recommendations"/>
+
 ### Elasticsearch server
 <img src="./media/elastic_search_server.png" alt="Elasticsearch Server"/>
 
