@@ -2,15 +2,24 @@
 
 A full stack e-commerce application built with Next.js, FastAPI and Elasticsearch. It provides a seamless shopping experience with powerful search capabilities, sorting, filtering and an intuitive interface. The application is fully responsive and mobile-friendly, offering a consistent experience across all devices. 
 
+
 ## Features
 
-- Real-time product search with Elasticsearch
-- Advanced filtering and sorting options
-- Responsive design that works on mobile, tablet and desktop
-- Clean and modern UI built with TailwindCSS and Radix UI
-- Fast and optimized performance
-- RESTful API backend with FastAPI
-- Containerized deployment with Docker
+- **Real-Time Product Search**: Instantly fetch and display product results powered by Elasticsearch for high-performance search capabilities.  
+- **Advanced Filtering and Sorting Options**:  
+  - Multiple value filters for categories and subcategories.  
+  - Range filters for product price and ratings.  
+  - Options to clear individual filters or reset all filters simultaneously.  
+  - Sorting options include Relevance, Price (Low to High), Price (High to Low), and Top Rated.  
+- **Responsive Design**: Fully optimized for mobile, tablet, and desktop devices, ensuring a seamless user experience across all platforms.  
+- **Clean and Modern UI**: Built using **TailwindCSS** and **Radix UI** for a visually appealing and user-friendly interface.  
+- **Personalized Product Recommendations**: Tailored product suggestions based on user preferences and browsing history.  
+- **Fast and Optimized Performance**: Highly efficient, ensuring a smooth and lag-free experience even for large datasets.  
+- **SEO-Friendly Architecture**: Powered by **Next.js** with dynamically generated metadata for product pages to enhance search engine visibility.  
+- **RESTful API Backend**: Developed with **FastAPI**, ensuring reliable and scalable backend services.  
+- **Pagination Controls**: Seamless pagination with customizable page size options for improved navigation.  
+- **Containerized Deployment**: Easily set up and deploy the application with Docker for streamlined and consistent deployment.  
+
 
 ## Tech Stack
 - Next.js
@@ -37,7 +46,12 @@ A full stack e-commerce application built with Next.js, FastAPI and Elasticsearc
 9. Elasticsearch will be available at `http://localhost:9200/`
 
 
+
 ## Media
+
+<video width="320" height="240" controls>
+  <source src="./media/shopzone_demo.mp4" type="video/mp4">
+</video>
 
 ### Landing Page
 <img src="./media/landing_page.png" alt="Landing Page"/>
