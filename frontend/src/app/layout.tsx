@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 const siteConfig = {
   name: "Shopzone | Your One-Stop Online Shopping Destination",
   description: "Discover amazing deals on electronics, fashion, home goods, and more at Shopzone. Shop with confidence with our secure checkout and fast delivery.",
-  url: "http://localhost:3000/",
+  url: "http://localhost:3000",
 }
 
 

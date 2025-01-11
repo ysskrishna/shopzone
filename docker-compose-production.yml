@@ -1,23 +1,7 @@
 version: "3.7"
 
 services:
-  backend:
-    build:
-      context: ./backend
-    env_file:
-      - backend/.env.production
-    ports:
-      - "8081:8081"
-    depends_on:
-      - elasticsearch
-
-  frontend:
-    build:
-      context: ./frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
+  
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
@@ -41,6 +25,12 @@ services:
       - ./elasticsearch-data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   kibana:
     container_name: kibana
     image: docker.elastic.co/kibana/kibana:7.4.0
@@ -52,4 +42,27 @@ services:
     ports:
       - 5601:5601
     depends_on:
-      - elasticsearch 
+      - elasticsearch
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      - ENVIRONMENT=production
+    env_file:
+      - backend/.env.production
+    ports:
+      - "8081:8081"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=http://backend:8081
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

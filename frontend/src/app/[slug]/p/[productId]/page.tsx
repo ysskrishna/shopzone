@@ -1,4 +1,3 @@
-import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import config from '@/common/config';
 import { Header } from '@/widgets/Header';
@@ -7,6 +6,11 @@ import { Star } from 'lucide-react';
 import BackButton from '@/widgets/BackButton';
 import { ProductCard } from '@/widgets/ProductCard';
 import { Product } from '@/types';
+
+type ProductPageParams = Promise<{
+    slug: string;
+    productId: string;
+}>
 
 const fetchProduct = async (productId: string) => {
     const response = await fetch(`${config.baseUrl}/product/${productId}`, {
@@ -33,24 +37,28 @@ const fetchRecommendations = async (productId: string) => {
 
 
 export async function generateMetadata(
-  { params }: { params: { productId: string } }
-): Promise<Metadata> {
-  const validatedParams = await Promise.resolve(params);
+  props: { params: ProductPageParams}
+) {
+  const validatedParams = await props.params;
   const product = await fetchProduct(validatedParams.productId);
-  
+  const description = product.description || `Buy ${product.name} at the best price`;
+
   return {
     title: product.name,
-    description: product.description,
+    description: description,
     openGraph: {
-      title: product.name,
-      description: product.description
+        type: "website",
+        locale: "en_US",
+        title: product.name,
+        description: description,
+        images: [`http://localhost:3000/og-image.png`],
+        siteName: product.name,
     },
   };
 }
 
-export default async function ProductPage({ params }: { params: { productId: string } }) {
-  // Await params here as well
-  const validatedParams = await Promise.resolve(params);
+export default async function ProductPage(props: { params: ProductPageParams }) {
+  const validatedParams = await props.params;
   const product = await fetchProduct(validatedParams.productId);
   const recommendations = await fetchRecommendations(validatedParams.productId);  
 
