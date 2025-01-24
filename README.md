@@ -49,6 +49,10 @@ A full stack e-commerce application built with Next.js, FastAPI and Elasticsearc
 
 ## Media
 
+
+https://github.com/user-attachments/assets/c4714cf6-e8fe-498c-b092-d974642fbe45
+
+
 <video width="320" height="240" controls>
   <source src="./media/shopzone_demo.mp4" type="video/mp4">
 </video>
