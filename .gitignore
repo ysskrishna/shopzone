@@ -261,3 +261,7 @@ notes.md
 chroma
 
 elasticsearch-data/*
+
+# Local secret files. Example files stay tracked.
+backend/.env
+backend/.env.production

@@ -1,5 +1,7 @@
 # ShopZone
 
+[![License: AGPL-3.0](https://img.shields.io/github/license/ysskrishna/shopzone)](https://github.com/ysskrishna/shopzone/blob/main/LICENSE) [![Author site](https://img.shields.io/badge/author-ysskrishna.space-informational)](https://ysskrishna.space)
+
 A full stack e-commerce application built with Next.js, FastAPI and Elasticsearch. It provides a seamless shopping experience with powerful search capabilities, sorting, filtering and an intuitive interface. The application is fully responsive and mobile-friendly, offering a consistent experience across all devices. 
 
 
@@ -79,9 +81,32 @@ https://github.com/user-attachments/assets/c4714cf6-e8fe-498c-b092-d974642fbe45
 8. Kibana will be available at `http://localhost:5601/`
 9. Elasticsearch will be available at `http://localhost:9200/`
 
+## Built and maintained by
 
+ShopZone is built and maintained by:
+
+| | Name | GitHub | Role |
+|---|------|--------|------|
+| <img src="https://github.com/ysskrishna.png?size=120" width="60" height="60" alt="Y. Siva Sai Krishna"> | **Y. Siva Sai Krishna** | [@ysskrishna](https://github.com/ysskrishna) | Creator |
+
+## Support
+
+If you find this project helpful:
+
+- ⭐ Star the repository
+- 🐛 [Report issues](https://github.com/ysskrishna/shopzone/issues)
+- 🔀 Submit pull requests
+- 💝 [Sponsor on GitHub](https://github.com/sponsors/ysskrishna)
 
 ## License
-Copyright (c) 2024 [Y. Siva Sai Krishna](https://github.com/ysskrishna)
 
-This project is licensed under the AGPL-3.0 License - see the LICENSE file for details.
+AGPL-3.0 © [Y. Siva Sai Krishna](https://github.com/ysskrishna) — see [LICENSE](LICENSE) for details.
+
+---
+
+<p align="left">
+  <a href="https://github.com/ysskrishna">Author's GitHub</a> •
+  <a href="https://linkedin.com/in/ysskrishna">Author's LinkedIn</a> •
+  <a href="https://ysskrishna.space">Author's site</a> •
+  <a href="https://github.com/ysskrishna/shopzone/issues">Report Issues</a>
+</p>
